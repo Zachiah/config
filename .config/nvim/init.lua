@@ -17,10 +17,29 @@ require("lazy").setup({
 	"nvim-telescope/telescope.nvim",
 	"nvim-lua/plenary.nvim",
 	"nvim-treesitter/nvim-treesitter",
+	{'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
+	{'neovim/nvim-lspconfig'},
+	{'hrsh7th/cmp-nvim-lsp'},
+	{'hrsh7th/nvim-cmp'},
+	{'L3MON4D3/LuaSnip'},
+	"williamboman/mason.nvim",
+	"williamboman/mason-lspconfig.nvim",
+	"neovim/nvim-lspconfig",
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		}
+	},
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 }, opts)
 
 require("nnn").setup({
 })
+
 require("presence").setup({})
 local telescope = require("telescope.builtin")
 
@@ -31,6 +50,36 @@ require'nvim-treesitter.configs'.setup {
     disable = { },  -- list of language that will be disabled
   },
 }
+
+local lsp_zero = require('lsp-zero')
+
+lsp_zero.on_attach(function(client, bufnr)
+  -- see :help lsp-zero-keybindings
+  -- to learn the available actions
+  lsp_zero.default_keymaps({buffer = bufnr})
+end)
+
+require('lspconfig').intelephense.setup({
+})
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  -- Replace the language servers listed here 
+  -- with the ones you want to install
+  ensure_installed = {'intelephense'},
+  handlers = {
+    lsp_zero.default_setup,
+  },
+})
+
+local cmp = require('cmp')
+
+cmp.setup({
+  preselect = 'item',
+  completion = {
+    completeopt = 'menu,menuone,noinsert'
+  },
+})
 
 -- Set relative line numbers
 vim.wo.relativenumber = true

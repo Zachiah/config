@@ -9,4 +9,4 @@
 [alias]
 	fuzz = "!f() { git branch --sort=-committerdate --format=\"%(refname:short)\" | grep -m 1 \"$1\" | xargs git checkout; }; f"
 [credential]
-	helper = "!f() { /home/developer/.vscode-server/bin/e7e037083ff4455cf320e344325dacb480062c3c/node /tmp/vscode-remote-containers-5616e010-5798-4e66-9142-ed4e7fb999e2.js git-credential-helper $*; }; f"
+	helper = "!f() { /home/developer/.vscode-server/bin/e7e037083ff4455cf320e344325dacb480062c3c/node /tmp/vscode-remote-containers-a41fcd99-c6af-4244-96ac-20840a96ff99.js git-credential-helper $*; }; f"

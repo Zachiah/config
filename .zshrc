@@ -101,4 +101,5 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PATH=$PATH:/Users/zaciahsawyer/.spicetify
 export PATH=$PATH:/Users/zaciahsawyer/Library/Python/3.9/bin
+export PATH=$PATH:~/.global_npm_packages/bin
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'

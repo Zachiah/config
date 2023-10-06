@@ -25,6 +25,14 @@ require("nnn").setup({
 require("presence").setup({})
 local telescope = require("telescope.builtin")
 
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "typescript",     -- one of "all", "language", or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { },  -- list of language that will be disabled
+  },
+}
+
 -- Set relative line numbers
 vim.wo.relativenumber = true
 vim.wo.number = true
@@ -35,3 +43,15 @@ vim.api.nvim_set_keymap('n', '<Leader>fm', ':NnnExplorer<CR>', { noremap = true,
 vim.keymap.set('n', '<leader>ff', telescope.find_files, {})
 vim.keymap.set('n', '<leader>fg', telescope.live_grep, {})
 vim.api.nvim_set_keymap('n', '<leader>r', ':luafile ' .. vim.fn.stdpath('config') .. '/init.lua<CR>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>wj', ':wincmd j<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>Wj', '<C-w>s:wincmd j<CR>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>wk', ':wincmd k<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>Wk', '<C-w>s', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>wh', ':wincmd h<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>Wh', '<C-w>v', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>wl', ':wincmd l<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>Wl', '<C-w>v:wincmd l<CR>', { noremap = true, silent = true })

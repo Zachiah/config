@@ -6,3 +6,5 @@
 [user]
 	name = Zachiah Sawyer
 	email = zachiah@proton.me
+[alias]
+	fuzz = "!f() { git branch --sort=-committerdate --format=\"%(refname:short)\" | grep -m 1 \"$1\" | xargs git checkout; }; f"

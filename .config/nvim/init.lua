@@ -20,7 +20,6 @@ require("lazy").setup({
 }, opts)
 
 require("nnn").setup({
-	replace_netrw = "picker",
 })
 require("presence").setup({})
 local telescope = require("telescope.builtin")

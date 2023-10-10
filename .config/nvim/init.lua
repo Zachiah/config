@@ -80,6 +80,7 @@ require('mason-lspconfig').setup({
 	  'lua_ls',
 	  'vimls',
 	  'rust_analyzer',
+      'volar',
   },
   handlers = {
     lsp_zero.default_setup,

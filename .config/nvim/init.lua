@@ -36,7 +36,6 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		}
 	},
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	"numToStr/FTerm.nvim",
 	{
 	  "folke/tokyonight.nvim",

@@ -1,3 +1,4 @@
+-- TODO: Test
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -10,7 +11,6 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-
 require("lazy").setup({
 	"luukvbaal/nnn.nvim",
 	"andweeb/presence.nvim",
@@ -29,12 +29,23 @@ require("lazy").setup({
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {
+			signs = true,
+			sign_priority = 50,
 			-- your configuration comes here
 			-- or leave it empty to use the default settings
 			-- refer to the configuration section below
 		}
 	},
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	"numToStr/FTerm.nvim",
+	{
+	  "folke/tokyonight.nvim",
+	  lazy = false,
+	  priority = 1000,
+	  opts = {},
+	},
+	"tpope/vim-fugitive",
+	'vim-airline/vim-airline',
 }, opts)
 
 require("nnn").setup({
@@ -66,7 +77,12 @@ require('mason').setup({})
 require('mason-lspconfig').setup({
   -- Replace the language servers listed here 
   -- with the ones you want to install
-  ensure_installed = {'intelephense'},
+  ensure_installed = {
+	  'intelephense',
+	  'lua_ls',
+	  'vimls',
+	  'rust_analyzer',
+  },
   handlers = {
     lsp_zero.default_setup,
   },
@@ -79,7 +95,16 @@ cmp.setup({
   completion = {
     completeopt = 'menu,menuone,noinsert'
   },
+  mapping = cmp.mapping.preset.insert({
+      ['<Tab>'] = cmp.mapping.confirm({select = true}),
+  })
 })
+
+
+local fterm = require('FTerm')
+fterm.setup({})
+
+vim.cmd[[colorscheme tokyonight]]
 
 -- Set relative line numbers
 vim.wo.relativenumber = true
@@ -103,3 +128,6 @@ vim.api.nvim_set_keymap('n', '<leader>Wh', '<C-w>v', { noremap = true, silent = 
 
 vim.api.nvim_set_keymap('n', '<leader>wl', ':wincmd l<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>Wl', '<C-w>v:wincmd l<CR>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>tf', fterm.toggle, {})
+

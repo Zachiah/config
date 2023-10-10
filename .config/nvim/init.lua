@@ -128,4 +128,11 @@ vim.api.nvim_set_keymap('n', '<leader>wl', ':wincmd l<CR>', { noremap = true, si
 vim.api.nvim_set_keymap('n', '<leader>Wl', '<C-w>v:wincmd l<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>tf', fterm.toggle, {})
+vim.keymap.set('t', '<leader>tf', fterm.toggle, {})
+
+vim.cmd [[
+set tabstop=4
+set shiftwidth=4
+set expandtab
+]]
 

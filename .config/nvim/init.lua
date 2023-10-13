@@ -24,6 +24,7 @@ require("lazy").setup({
 	"williamboman/mason.nvim",
 	"williamboman/mason-lspconfig.nvim",
 	"neovim/nvim-lspconfig",
+    "tpope/vim-commentary",
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -53,7 +54,7 @@ require("presence").setup({})
 local telescope = require("telescope.builtin")
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "typescript",     -- one of "all", "language", or a list of languages
+  ensure_installed = {"typescript", "svelte", "lua"},     -- one of "all", "language", or a list of languages
   highlight = {
     enable = true,              -- false will disable the whole extension
     disable = { },  -- list of language that will be disabled
@@ -81,6 +82,7 @@ require('mason-lspconfig').setup({
 	  'vimls',
 	  'rust_analyzer',
       'volar',
+      'svelte',
   },
   handlers = {
     lsp_zero.default_setup,

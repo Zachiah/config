@@ -83,6 +83,7 @@ require('mason-lspconfig').setup({
         'rust_analyzer',
         'volar',
         'svelte',
+        'tsserver',
     },
     handlers = {
         lsp_zero.default_setup,

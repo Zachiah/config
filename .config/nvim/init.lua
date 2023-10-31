@@ -54,7 +54,7 @@ require("presence").setup({})
 local telescope = require("telescope.builtin")
 
 require 'nvim-treesitter.configs'.setup {
-    ensure_installed = { "typescript", "svelte", "lua" }, -- one of "all", "language", or a list of languages
+    ensure_installed = { "typescript", "svelte", "lua", "php", "javascript", "css", "html", "rust" }, -- one of "all", "language", or a list of languages
     highlight = {
         enable = true,                                -- false will disable the whole extension
         disable = {},                                 -- list of language that will be disabled

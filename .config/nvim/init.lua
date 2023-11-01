@@ -137,7 +137,9 @@ vim.keymap.set('n', '<leader>tf', fterm.toggle, {})
 vim.keymap.set('t', '<leader>tf', fterm.toggle, {})
 
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>lr', ':LspRestart', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>lr\n', ':LspRestart', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>yn', ':let @" = expand("%")\n', { noremap = true, silent = true })
 
 vim.cmd [[
 set tabstop=4

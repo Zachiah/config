@@ -45,6 +45,8 @@ require("lazy").setup({
     },
     "tpope/vim-fugitive",
     'vim-airline/vim-airline',
+    'airblade/vim-gitgutter',
+    'f-person/git-blame.nvim',
 }, opts)
 
 require("nnn").setup({
@@ -54,10 +56,10 @@ require("presence").setup({})
 local telescope = require("telescope.builtin")
 
 require 'nvim-treesitter.configs'.setup {
-    ensure_installed = { "typescript", "svelte", "lua", "php", "javascript", "css", "html", "rust" }, -- one of "all", "language", or a list of languages
+    ensure_installed = { "typescript", "svelte", "lua", "php", "javascript", "css", "html", "rust", "sql", "regex" },
     highlight = {
-        enable = true,                                -- false will disable the whole extension
-        disable = {},                                 -- list of language that will be disabled
+        enable = true,
+        disable = {},
     },
 }
 

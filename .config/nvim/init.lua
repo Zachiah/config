@@ -110,9 +110,10 @@ fterm.setup({})
 
 vim.cmd [[colorscheme tokyonight]]
 
--- Set relative line numbers
+-- general vim options
 vim.wo.relativenumber = true
 vim.wo.number = true
+vim.o.scrolloff = 5
 
 -- Keymappings
 vim.g.mapleader = " "

@@ -119,7 +119,11 @@ vim.o.scrolloff = 5
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap('n', '<Leader>fm', ':NnnExplorer<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>ff', telescope.find_files, {})
-vim.keymap.set('n', '<leader>fg', telescope.live_grep, {})
+vim.keymap.set('n', '<leader>fg', function()
+    telescope.live_grep({
+        find_command = { 'git', 'ls-files', '--exclude-standard' }
+    })
+end, {})
 
 vim.api.nvim_set_keymap('n', '<leader>wj', ':wincmd j<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>Wj', '<C-w>s:wincmd j<CR>', { noremap = true, silent = true })

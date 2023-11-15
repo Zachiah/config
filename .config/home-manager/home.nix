@@ -23,18 +23,24 @@
         pkgs.rustup
         pkgs.nodePackages.pnpm
         pkgs.nodejs_20
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+        pkgs.spotify
+        pkgs.discord
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+        # I'm sorry but sometimes it has to be ):
+        pkgs.vscode
+
+        # # It is sometimes useful to fine-tune packages, for example, by applying
+        # # overrides. You can do that directly here, just don't forget the
+        # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+        # # fonts?
+        # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+        # # You can also create simple shell scripts directly inside your
+        # # configuration. For example, this adds a command 'my-hello' to your
+        # # environment:
+        # (pkgs.writeShellScriptBin "my-hello" ''
+        #   echo "Hello, ${config.home.username}!"
+        # '')
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -71,5 +77,9 @@
     programs.neovim.enable = true;
     programs.tmux.enable = true;
     programs.git.enable = true;
+
+    nixpkgs.config.allowUnfree = true;
+
+    
 }
 

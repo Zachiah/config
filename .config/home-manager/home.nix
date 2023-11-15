@@ -3,8 +3,8 @@
 {
     # Home Manager needs a bit of information about you and the paths it should
     # manage.
-    home.username = "zaciahsawyer";
-    home.homeDirectory = "/Users/zaciahsawyer";
+    home.username = "zachiahsawyer";
+    home.homeDirectory = "/Users/zachiahsawyer";
 
     # This value determines the Home Manager release that your configuration is
     # compatible with. This helps avoid breakage when a new Home Manager release
@@ -21,10 +21,8 @@
         pkgs.neofetch
         pkgs.tree-sitter
         pkgs.rustup
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
+        pkgs.nodePackages.pnpm
+        pkgs.nodejs_20
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -65,7 +63,7 @@
     #
     # if you don't want to manage your shell through Home Manager.
     home.sessionVariables = {
-    # EDITOR = "emacs";
+        # EDITOR = "emacs";
     };
 
     # Let Home Manager install and manage itself.

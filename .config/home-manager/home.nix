@@ -1,11 +1,8 @@
 { config, pkgs, ... }:
 
 {
-    # Home Manager needs a bit of information about you and the paths it should
-    # manage.
-    home.username = "zachiahsawyer";
-    home.homeDirectory = "/Users/zachiahsawyer";
-
+    home.username = builtins.getEnv "USER";
+    home.homeDirectory = builtins.getEnv "HOME";
     # This value determines the Home Manager release that your configuration is
     # compatible with. This helps avoid breakage when a new Home Manager release
     # introduces backwards incompatible changes.
@@ -15,16 +12,18 @@
     # release notes.
     home.stateVersion = "23.05"; # Please read the comment before changing.
 
-    # The home.packages option allows you to install Nix packages into your
-    # environment.
     home.packages = [
         pkgs.neofetch
         pkgs.tree-sitter
         pkgs.rustup
+
         pkgs.nodePackages.pnpm
+        pkgs.twilio-cli
+
         pkgs.nodejs_20
         pkgs.spotify
         pkgs.discord
+        pkgs.gh
 
         # I'm sorry but sometimes it has to be ):
         pkgs.vscode
@@ -72,14 +71,25 @@
         # EDITOR = "emacs";
     };
 
+    home.shellAliases = {
+        config = "/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+    };
+
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
     programs.neovim.enable = true;
     programs.tmux.enable = true;
     programs.git.enable = true;
+    programs.zsh = {
+        enable = true;
+        oh-my-zsh = {
+            enable = true;
+            plugins = ["git"];
+            theme = "cloud";
+        };
+    };
 
     nixpkgs.config.allowUnfree = true;
-
-    
 }
 
+#eval TWILIO_AC_ZSH_SETUP_PATH=/Users/zachiahsawyer/.twilio-cli/autocomplete/zsh_setup && test -f $TWILIO_AC_ZSH_SETUP_PATH && source $TWILIO_AC_ZSH_SETUP_PATH; # twilio autocomplete setup

@@ -24,6 +24,7 @@
         pkgs.spotify
         pkgs.discord
         pkgs.gh
+        pkgs.ripgrep
 
         # I'm sorry but sometimes it has to be ):
         pkgs.vscode

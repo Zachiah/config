@@ -111,7 +111,7 @@ fterm.setup({})
 vim.cmd [[colorscheme tokyonight]]
 
 -- general vim options
-vim.wo.relativenumber = true
+vim.opt.relativenumber = true
 vim.wo.number = true
 vim.o.scrolloff = 5
 
@@ -149,4 +149,9 @@ vim.cmd [[
 set tabstop=4
 set shiftwidth=4
 set expandtab
+]]
+
+-- Line number colors
+vim.cmd [[
+    highlight LineNr ctermfg=White guifg=White
 ]]

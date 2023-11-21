@@ -146,6 +146,11 @@ vim.keymap.set('n', '<leader>lr', ':LspRestart<CR>', { noremap = true, silent = 
 vim.keymap.set('n', '<leader>len', vim.diagnostic.goto_next, { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>lep', vim.diagnostic.goto_prev, { noremap = true, silent = true })
 
+local rel = true
+vim.keymap.set('n', '<leader>~', function() 
+    vim.opt.relativenumber = not rel
+    rel = not rel
+end)
 
 vim.keymap.set('n', '<leader>yn', ':let @" = expand("%")\n', { noremap = true, silent = true })
 

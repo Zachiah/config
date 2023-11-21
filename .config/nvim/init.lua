@@ -76,8 +76,6 @@ require('lspconfig').intelephense.setup({
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    -- Replace the language servers listed here
-    -- with the ones you want to install
     ensure_installed = {
         'intelephense',
         'lua_ls',
@@ -86,6 +84,7 @@ require('mason-lspconfig').setup({
         'volar',
         'svelte',
         'tsserver',
+        'tailwindcss',
     },
     handlers = {
         lsp_zero.default_setup,
@@ -101,6 +100,8 @@ cmp.setup({
     },
     mapping = cmp.mapping.preset.insert({
         ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+        -- TODO: figure this out
+        -- ['<S-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c' })
     })
 })
 
@@ -141,7 +142,10 @@ vim.keymap.set('n', '<leader>tf', fterm.toggle, {})
 vim.keymap.set('t', '<leader>tf', fterm.toggle, {})
 
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>lr\n', ':LspRestart', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>lr', ':LspRestart<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>len', vim.diagnostic.goto_next, { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>lep', vim.diagnostic.goto_prev, { noremap = true, silent = true })
+
 
 vim.keymap.set('n', '<leader>yn', ':let @" = expand("%")\n', { noremap = true, silent = true })
 

@@ -25,6 +25,7 @@
         pkgs.discord
         pkgs.gh
         pkgs.ripgrep
+        pkgs.alacritty
 
         # I'm sorry but sometimes it has to be ):
         pkgs.vscode
@@ -88,6 +89,9 @@
             plugins = ["git"];
             theme = "cloud";
         };
+        initExtra = ''
+            source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+        '';
     };
 
     nixpkgs.config.allowUnfree = true;

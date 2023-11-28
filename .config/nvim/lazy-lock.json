@@ -3,7 +3,7 @@
   "LuaSnip": { "branch": "master", "commit": "cdbf6f41381e5ee4810b4b09284b603d8f18365d" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "44b16d11215dce86f253ce0c30949813c0a90765" },
   "git-blame.nvim": { "branch": "master", "commit": "1792125237260dc2a03ba57d31c39179e6049f07" },
-  "lazy.nvim": { "branch": "main", "commit": "0d9989d46cd2ae624858b94e529ee3e9d07773fd" },
+  "lazy.nvim": { "branch": "main", "commit": "73fbf5ccabd0233653bdeb4bb2b07fcfa97b57e0" },
   "lsp-zero.nvim": { "branch": "v3.x", "commit": "22677c535fdc11a73da67a186a30e360d8857497" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "e2705063f395b44f676cd26596a11007a2cbd3bd" },
   "mason.nvim": { "branch": "main", "commit": "d66c60e17dd6fd8165194b1d14d21f7eb2c1697a" },
@@ -19,5 +19,6 @@
   "vim-airline": { "branch": "master", "commit": "f1ba5a03db44adf6f95f08b9970019e6658bc748" },
   "vim-commentary": { "branch": "master", "commit": "e87cd90dc09c2a203e13af9704bd0ef79303d755" },
   "vim-fugitive": { "branch": "master", "commit": "99db68d9b3304580bd383da7aaee05c7a954a344" },
-  "vim-gitgutter": { "branch": "main", "commit": "f7b97666ae36c7b3f262f3190dbcd7033845d985" }
+  "vim-gitgutter": { "branch": "main", "commit": "f7b97666ae36c7b3f262f3190dbcd7033845d985" },
+  "vim-visual-multi": { "branch": "master", "commit": "aec289a9fdabaa0ee6087d044d75b32e12084344" }
 }

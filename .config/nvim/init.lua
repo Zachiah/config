@@ -47,6 +47,7 @@ require("lazy").setup({
     'vim-airline/vim-airline',
     'airblade/vim-gitgutter',
     'f-person/git-blame.nvim',
+    'mg979/vim-visual-multi',
 }, opts)
 
 require("nnn").setup({

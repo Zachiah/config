@@ -93,7 +93,6 @@
             source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
         '';
     };
-
     nixpkgs.config.allowUnfree = true;
 }
 

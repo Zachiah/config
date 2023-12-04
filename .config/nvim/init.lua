@@ -58,7 +58,18 @@ require("presence").setup({})
 local telescope = require("telescope.builtin")
 
 require 'nvim-treesitter.configs'.setup {
-    ensure_installed = { "typescript", "svelte", "lua", "php", "javascript", "css", "html", "rust", "sql", "regex" },
+    ensure_installed = {
+        "typescript",
+        "svelte",
+        "lua",
+        "php",
+        "javascript",
+        "css",
+        "html",
+        "rust",
+        "sql",
+        "regex",
+    },
     highlight = {
         enable = true,
         disable = {},
@@ -149,7 +160,7 @@ vim.keymap.set('n', '<leader>len', vim.diagnostic.goto_next, { noremap = true, s
 vim.keymap.set('n', '<leader>lep', vim.diagnostic.goto_prev, { noremap = true, silent = true })
 
 local rel = true
-vim.keymap.set('n', '<leader>~', function() 
+vim.keymap.set('n', '<leader>~', function()
     vim.opt.relativenumber = not rel
     rel = not rel
 end)
@@ -162,6 +173,7 @@ set shiftwidth=4
 set expandtab
 set list
 set listchars=tab:>-
+set colorcolumn=80
 ]]
 require('guess-indent').setup {}
 

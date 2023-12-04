@@ -8,7 +8,5 @@
     email = zachiah@proton.me
 [alias]
     fuzz = "!f() { git branch --sort=-committerdate --format=\"%(refname:short)\" | grep -m 1 \"$1\" | xargs git checkout; }; f"
-[credential]
-    helper = "!f() { /home/developer/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/node /tmp/vscode-remote-containers-e5513c28-efc6-45e7-a61d-5ce3bde38cfc.js git-credential-helper $*; }; f"
 [push]
     autoSetupRemote = true

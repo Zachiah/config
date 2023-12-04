@@ -1,7 +1,5 @@
 # Zachiah's Configuration Files
 
-Leaving private for now until I'm sure it's alright to be public
-
 Got this idea from [here](https://www.atlassian.com/git/tutorials/dotfiles).
 
 To add a new machine simply:

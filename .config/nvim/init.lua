@@ -48,6 +48,7 @@ require("lazy").setup({
     'airblade/vim-gitgutter',
     'f-person/git-blame.nvim',
     'mg979/vim-visual-multi',
+    'nmac427/guess-indent.nvim',
 }, opts)
 
 require("nnn").setup({
@@ -162,6 +163,7 @@ set expandtab
 set list
 set listchars=tab:>-
 ]]
+require('guess-indent').setup {}
 
 -- Line number colors
 vim.cmd [[

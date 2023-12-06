@@ -26,7 +26,7 @@
         pkgs.gh
         pkgs.ripgrep
         pkgs.alacritty
-
+        pkgs.spotify-tui
         # I'm sorry but sometimes it has to be ):
         pkgs.vscode
 

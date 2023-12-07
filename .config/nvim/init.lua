@@ -174,6 +174,7 @@ set shiftwidth=4
 set expandtab
 set list
 set listchars=tab:>-
+set lcs+=space:·
 set colorcolumn=80
 ]]
 require('guess-indent').setup {}

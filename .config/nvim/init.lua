@@ -124,10 +124,6 @@ fterm.setup({})
 
 vim.cmd [[colorscheme tokyonight]]
 
--- general vim options
-vim.opt.relativenumber = true
-vim.wo.number = true
-vim.o.scrolloff = 5
 
 -- Keymappings
 vim.g.mapleader = " "
@@ -168,16 +164,23 @@ end)
 
 vim.keymap.set('n', '<leader>yn', ':let @" = expand("%")\n', { noremap = true, silent = true })
 
-vim.cmd [[
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set list
-set listchars=tab:>-
-set lcs+=space:·
-set colorcolumn=80
-]]
+-- General Vim options
+vim.opt.list = true;
+vim.opt.expandtab = true;
+vim.opt.listchars = 'tab:>-,space:·';
+vim.opt.colorcolumn = '80';
+vim.opt.tabstop = 4;
+vim.opt.shiftwidth = 4;
+vim.opt.expandtab = true;
+vim.opt.relativenumber = true
+vim.opt.number = true
+vim.opt.scrolloff = 5
 require('guess-indent').setup {}
+
+-- Remove Carriage returns on save
+vim.cmd [[
+  autocmd BufWritePre * %s/\r\n/\r/ge
+]]
 
 -- Line number colors
 vim.cmd [[

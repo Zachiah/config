@@ -177,11 +177,6 @@ vim.opt.number = true
 vim.opt.scrolloff = 5
 require('guess-indent').setup {}
 
--- Remove Carriage returns on save
-vim.cmd [[
-  autocmd BufWritePre * %s/\r\n/\r/ge
-]]
-
 -- Line number colors
 vim.cmd [[
     highlight LineNr ctermfg=White guifg=White

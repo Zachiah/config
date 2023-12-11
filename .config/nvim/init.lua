@@ -134,6 +134,7 @@ vim.keymap.set('n', '<leader>fg', function()
         find_command = { 'git', 'ls-files', '--exclude-standard' }
     })
 end, {})
+vim.keymap.set('n', '<leader>fs', telescope.treesitter)
 
 vim.api.nvim_set_keymap('n', '<leader>wj', ':wincmd j<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>Wj', '<C-w>s:wincmd j<CR>', { noremap = true, silent = true })

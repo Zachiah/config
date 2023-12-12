@@ -14,6 +14,8 @@ require("lazy").setup({
     "luukvbaal/nnn.nvim",
     "andweeb/presence.nvim",
     "nvim-telescope/telescope.nvim",
+    "nvim-telescope/telescope-frecency.nvim",
+    'nvim-tree/nvim-web-devicons',
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
     { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
@@ -51,11 +53,12 @@ require("lazy").setup({
     'nmac427/guess-indent.nvim',
 }, opts)
 
+require("nvim-web-devicons").setup()
+
 require("nnn").setup({
 })
 
 require("presence").setup({})
-local telescope = require("telescope.builtin")
 
 require 'nvim-treesitter.configs'.setup {
     ensure_installed = {
@@ -126,6 +129,9 @@ vim.cmd [[colorscheme tokyonight]]
 
 
 -- Keymappings
+require("telescope").load_extension "frecency"
+local telescope = require("telescope.builtin")
+
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap('n', '<Leader>fm', ':NnnExplorer<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>ff', telescope.find_files, {})
@@ -135,6 +141,7 @@ vim.keymap.set('n', '<leader>fg', function()
     })
 end, {})
 vim.keymap.set('n', '<leader>fs', telescope.treesitter)
+vim.api.nvim_set_keymap('n', '<leader>fr', ':Telescope frecency<CR>', { noremap = true, silent = true})
 vim.keymap.set('n', '<leader>fa', telescope.builtin)
 
 vim.api.nvim_set_keymap('n', '<leader>wj', ':wincmd j<CR>', { noremap = true, silent = true })

@@ -135,6 +135,7 @@ vim.keymap.set('n', '<leader>fg', function()
     })
 end, {})
 vim.keymap.set('n', '<leader>fs', telescope.treesitter)
+vim.keymap.set('n', '<leader>fa', telescope.builtin)
 
 vim.api.nvim_set_keymap('n', '<leader>wj', ':wincmd j<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>Wj', '<C-w>s:wincmd j<CR>', { noremap = true, silent = true })
@@ -154,8 +155,7 @@ vim.keymap.set('t', '<leader>tf', fterm.toggle, {})
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>lr', ':LspRestart<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>li', ':LspInfo<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>len', vim.diagnostic.goto_next, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>lep', vim.diagnostic.goto_prev, { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Space>', function() cmp.mapping(cmp.mapping.complete(), {'i', 'c'}) end)
 
 local rel = true
 vim.keymap.set('n', '<leader>~', function()

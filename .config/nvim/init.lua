@@ -51,6 +51,7 @@ require("lazy").setup({
     'f-person/git-blame.nvim',
     'mg979/vim-visual-multi',
     'nmac427/guess-indent.nvim',
+    'windwp/nvim-autopairs',
 }, opts)
 
 require("nvim-web-devicons").setup()
@@ -184,6 +185,7 @@ vim.opt.relativenumber = true
 vim.opt.number = true
 vim.opt.scrolloff = 5
 require('guess-indent').setup {}
+require('nvim-autopairs').setup {}
 
 -- Line number colors
 vim.cmd [[

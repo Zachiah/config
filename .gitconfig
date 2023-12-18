@@ -10,3 +10,5 @@
     fuzz = "!f() { git branch --sort=-committerdate --format=\"%(refname:short)\" | grep -m 1 \"$1\" | xargs git checkout; }; f"
 [push]
     autoSetupRemote = true
+[core]
+	editor = nvim

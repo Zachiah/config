@@ -191,3 +191,11 @@ require('nvim-autopairs').setup {}
 vim.cmd [[
     highlight LineNr ctermfg=White guifg=White
 ]]
+
+-- transparent bg
+vim.cmd [[
+    highlight Normal guibg=none
+    highlight NonText guibg=none
+    highlight Normal ctermbg=none
+    highlight NonText ctermbg=none
+]]

@@ -10,8 +10,15 @@
     # You should not change this value, even if you update Home Manager. If you do
     # want to update the value, then make sure to first check the Home Manager
     # release notes.
-    home.stateVersion = "23.05"; # Please read the comment before changing.
+    home.stateVersion = "23.11"; # Please read the comment before changing.
 
+    gtk = {
+        enable = true;
+        theme = {
+            name = "Catppuccin-Macchiato-Compact-Pink-Dark";
+            package = pkgs.catppuccin-gtk.override {};
+        };
+    };
     home.packages = [
         pkgs.neofetch
         pkgs.tree-sitter
@@ -23,26 +30,48 @@
         pkgs.nodejs_20
         pkgs.spotify
         pkgs.discord
-        pkgs.gh
+        pkgs.github-cli
         pkgs.ripgrep
+        pkgs.kitty
         pkgs.alacritty
         pkgs.spotify-tui
-        # I'm sorry but sometimes it has to be ):
         pkgs.vscode
+        pkgs.nerdfonts
+        
+        pkgs.wpa_supplicant_gui
 
-        # # It is sometimes useful to fine-tune packages, for example, by applying
-        # # overrides. You can do that directly here, just don't forget the
-        # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-        # # fonts?
-        # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-        # # You can also create simple shell scripts directly inside your
-        # # configuration. For example, this adds a command 'my-hello' to your
-        # # environment:
-        # (pkgs.writeShellScriptBin "my-hello" ''
-        #   echo "Hello, ${config.home.username}!"
-        # '')
+        pkgs.wl-clipboard
+        pkgs.swaylock
+        pkgs.swayidle
+        pkgs.grim
+        pkgs.slurp
+        pkgs.bemenu
+        pkgs.mako
+        pkgs.wdisplays
+        pkgs.helvum
+        pkgs.pavucontrol
+        pkgs.swaybg
+        pkgs.blueman
+        pkgs.bluez
+        pkgs.thunderbird
     ];
+
+  wayland.windowManager.sway = {
+    enable = true;
+    config = rec {
+      modifier = "Mod4";
+      terminal = "alacritty";
+      startup = [
+        { command = "swaybg -i ~/Downloads/dark-bg-1.jpg -m fill"; }
+      ];
+
+    };
+    extraConfig = ''
+      bindswitch lid:on output eDP-2 disable
+      bindswitch lid:off output eDP-2 enable
+      exec systemctl --user import-environment
+    '';
+  };
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
@@ -59,22 +88,12 @@
     # '';
     };
 
-    # You can also manage environment variables but you will have to manually
-    # source
-    #
-    #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-    #
-    # or
-    #
-    #  /etc/profiles/per-user/zaciahsawyer/etc/profile.d/hm-session-vars.sh
-    #
-    # if you don't want to manage your shell through Home Manager.
     home.sessionVariables = {
-        # EDITOR = "emacs";
+      XDG_CURRENT_DESKTOP = "sway"; 
     };
 
     home.shellAliases = {
-        config = "/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+        config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
     };
 
     # Let Home Manager install and manage itself.
@@ -93,6 +112,8 @@
             source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
         '';
     };
+    programs.firefox.enable = true;
+
     nixpkgs.config.allowUnfree = true;
 }
 

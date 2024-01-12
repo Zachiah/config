@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+    imports = [./linux-config.nix];
+
     home.username = builtins.getEnv "USER";
     home.homeDirectory = builtins.getEnv "HOME";
     # This value determines the Home Manager release that your configuration is
@@ -37,60 +39,15 @@
         pkgs.spotify-tui
         pkgs.vscode
         pkgs.nerdfonts
-        
-        pkgs.wpa_supplicant_gui
-
-        pkgs.wl-clipboard
-        pkgs.swaylock
-        pkgs.swayidle
-        pkgs.grim
-        pkgs.slurp
-        pkgs.bemenu
-        pkgs.mako
-        pkgs.wdisplays
-        pkgs.helvum
-        pkgs.pavucontrol
-        pkgs.swaybg
-        pkgs.blueman
-        pkgs.bluez
         pkgs.thunderbird
+        
     ];
 
-  wayland.windowManager.sway = {
-    enable = true;
-    config = rec {
-      modifier = "Mod4";
-      terminal = "alacritty";
-      startup = [
-        { command = "swaybg -i ~/Downloads/dark-bg-1.jpg -m fill"; }
-      ];
-
-    };
-    extraConfig = ''
-      bindswitch lid:on output eDP-2 disable
-      bindswitch lid:off output eDP-2 enable
-      exec systemctl --user import-environment
-    '';
-  };
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
-    home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+    home.file = {};
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-    };
-
-    home.sessionVariables = {
-      XDG_CURRENT_DESKTOP = "sway"; 
-    };
 
     home.shellAliases = {
         config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
@@ -99,7 +56,16 @@
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
     programs.neovim.enable = true;
-    programs.tmux.enable = true;
+    programs.tmux = {
+        enable = true;
+        extraConfig = ''
+            # Switch panes with Vim keys
+            bind -r k select-pane -U
+            bind -r j select-pane -D
+            bind -r h select-pane -L
+            bind -r l select-pane -R
+        '';
+    };
     programs.git.enable = true;
     programs.zsh = {
         enable = true;
@@ -113,8 +79,8 @@
         '';
     };
     programs.firefox.enable = true;
+    programs.vivaldi.enable = true;
 
     nixpkgs.config.allowUnfree = true;
 }
 
-#eval TWILIO_AC_ZSH_SETUP_PATH=/Users/zachiahsawyer/.twilio-cli/autocomplete/zsh_setup && test -f $TWILIO_AC_ZSH_SETUP_PATH && source $TWILIO_AC_ZSH_SETUP_PATH; # twilio autocomplete setup

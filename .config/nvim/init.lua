@@ -161,6 +161,7 @@ vim.keymap.set('n', '<leader>tf', fterm.toggle, {})
 vim.keymap.set('t', '<leader>tf', fterm.toggle, {})
 
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>lr', ':LspRestart<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>li', ':LspInfo<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<S-Space>', function() cmp.mapping(cmp.mapping.complete(), {'i', 'c'}) end)

@@ -145,17 +145,7 @@ vim.keymap.set('n', '<leader>fs', telescope.treesitter)
 vim.api.nvim_set_keymap('n', '<leader>fr', ':Telescope frecency<CR>', { noremap = true, silent = true})
 vim.keymap.set('n', '<leader>fa', telescope.builtin)
 
-vim.api.nvim_set_keymap('n', '<leader>wj', ':wincmd j<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>Wj', '<C-w>s:wincmd j<CR>', { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap('n', '<leader>wk', ':wincmd k<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>Wk', '<C-w>s', { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap('n', '<leader>wh', ':wincmd h<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>Wh', '<C-w>v', { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap('n', '<leader>wl', ':wincmd l<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>Wl', '<C-w>v:wincmd l<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>w', '<C-w>', {noremap = true, silent = true})
 
 vim.keymap.set('n', '<leader>tf', fterm.toggle, {})
 vim.keymap.set('t', '<leader>tf', fterm.toggle, {})

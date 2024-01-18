@@ -52,6 +52,17 @@ require("lazy").setup({
     'mg979/vim-visual-multi',
     'nmac427/guess-indent.nvim',
     'windwp/nvim-autopairs',
+    {
+        'glacambre/firenvim',
+
+        -- Lazy load firenvim
+        -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
+        lazy = not vim.g.started_by_firenvim,
+        -- lazy = false,
+        build = function()
+            vim.fn["firenvim#install"](0)
+        end
+    },
 }, opts)
 
 require("nvim-web-devicons").setup()
@@ -145,17 +156,7 @@ vim.keymap.set('n', '<leader>fs', telescope.treesitter)
 vim.api.nvim_set_keymap('n', '<leader>fr', ':Telescope frecency<CR>', { noremap = true, silent = true})
 vim.keymap.set('n', '<leader>fa', telescope.builtin)
 
-vim.api.nvim_set_keymap('n', '<leader>wj', ':wincmd j<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>Wj', '<C-w>s:wincmd j<CR>', { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap('n', '<leader>wk', ':wincmd k<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>Wk', '<C-w>s', { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap('n', '<leader>wh', ':wincmd h<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>Wh', '<C-w>v', { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap('n', '<leader>wl', ':wincmd l<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>Wl', '<C-w>v:wincmd l<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>w', '<C-w>', {noremap = true, silent = true})
 
 vim.keymap.set('n', '<leader>tf', fterm.toggle, {})
 vim.keymap.set('t', '<leader>tf', fterm.toggle, {})
@@ -165,6 +166,9 @@ vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { noremap = true, sil
 vim.keymap.set('n', '<leader>lr', ':LspRestart<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>li', ':LspInfo<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<S-Space>', function() cmp.mapping(cmp.mapping.complete(), {'i', 'c'}) end)
+
+vim.keymap.set('n', '<leader>bs',':w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa')
+vim.keymap.set('n', '<leader>be',':call firenvim#focus_page()<CR>')
 
 local rel = true
 vim.keymap.set('n', '<leader>~', function()

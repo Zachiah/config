@@ -44,6 +44,8 @@ in
             pkgs.gcc
             pkgs.pciutils
             pkgs.lshw
+            pkgs.shutter
+            pkgs.polychromatic
         ];
     };
 }

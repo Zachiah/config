@@ -52,6 +52,17 @@ require("lazy").setup({
     'mg979/vim-visual-multi',
     'nmac427/guess-indent.nvim',
     'windwp/nvim-autopairs',
+    {
+        'glacambre/firenvim',
+
+        -- Lazy load firenvim
+        -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
+        lazy = not vim.g.started_by_firenvim,
+        -- lazy = false,
+        build = function()
+            vim.fn["firenvim#install"](0)
+        end
+    },
 }, opts)
 
 require("nvim-web-devicons").setup()
@@ -155,6 +166,9 @@ vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { noremap = true, sil
 vim.keymap.set('n', '<leader>lr', ':LspRestart<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>li', ':LspInfo<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<S-Space>', function() cmp.mapping(cmp.mapping.complete(), {'i', 'c'}) end)
+
+vim.keymap.set('n', '<leader>bs',':w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa')
+vim.keymap.set('n', '<leader>be',':call firenvim#focus_page()<CR>')
 
 local rel = true
 vim.keymap.set('n', '<leader>~', function()

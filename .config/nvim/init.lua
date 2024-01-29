@@ -137,9 +137,15 @@ cmp.setup({
 local fterm = require('FTerm')
 fterm.setup({})
 
-vim.cmd [[colorscheme tokyonight]]
-
-
+vim.cmd [[
+  au ColorScheme * hi Normal ctermbg=none guibg=none
+  au ColorScheme * hi SignColumn ctermbg=none
+  au ColorScheme * hi NormalNC ctermbg=none guibg=none
+  au ColorScheme * hi MsgArea ctermbg=none guibg=none
+  au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none
+  au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none
+  colorscheme tokyonight
+]]
 -- Keymappings
 require("telescope").load_extension "frecency"
 local telescope = require("telescope.builtin")
@@ -195,12 +201,4 @@ require('nvim-autopairs').setup {}
 -- Line number colors
 vim.cmd [[
     highlight LineNr ctermfg=White guifg=White
-]]
-
--- transparent bg
-vim.cmd [[
-    highlight Normal guibg=none
-    highlight NonText guibg=none
-    highlight Normal ctermbg=none
-    highlight NonText ctermbg=none
 ]]

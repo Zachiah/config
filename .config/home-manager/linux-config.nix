@@ -12,10 +12,17 @@ in
         wayland.windowManager.sway = {
             enable = true;
             config = rec {
+                menu = "wofi -S run";
                 modifier = "Mod4";
                 terminal = "alacritty";
                 startup = [
                     { command = "swaybg -i ~/Downloads/dark-bg-1.jpg -m fill"; }
+                ];
+                bars = [
+                    {
+                        position = "top";
+                        command = "waybar";
+                    }
                 ];
             };
             extraConfig = ''
@@ -24,9 +31,9 @@ in
               exec systemctl --user import-environment
               client.focused #172554 #172554 #FFFFFF
               gaps inner 10
-              bar {
-                  swaybar_command waybar
-              }
+              bindsym Mod4+q exec swaylock --text-color 000000 --color ffffff --layout-bg-color ff0000 --image ~/Downloads/dark-bg-1.jpg
+              bindsym Mod4+period exec wofi-emoji
+              bindsym Mod4+c exec slurp | grim -g -
             '';
         };
 
@@ -60,6 +67,7 @@ in
                     margin-bottom: 10px;
                     color: white;
                     background-color: #172554;
+                    opacity: 0.8;
                     border-radius: 8px;
                 }
                 .modules-left, .modules-center, .modules-right {
@@ -95,6 +103,10 @@ in
             '';
         };
 
+        programs.firefox.package = pkgs.latest.firefox-nightly-bin;
+        programs.firefox.enable = true;
+
+
         home.packages = [
             pkgs.wpa_supplicant_gui
             pkgs.wl-clipboard
@@ -104,6 +116,7 @@ in
             pkgs.slurp
             pkgs.bemenu
             pkgs.mako
+            pkgs.libnotify
             pkgs.wdisplays
             pkgs.helvum
             pkgs.pavucontrol
@@ -116,6 +129,12 @@ in
             pkgs.lshw
             pkgs.shutter
             pkgs.polychromatic
+            pkgs.ulauncher
+            pkgs.wofi-emoji
+            pkgs.wofi
+            pkgs.wtype
+            pkgs.gnome3.nautilus
+            pkgs.loupe
         ];
     };
 }

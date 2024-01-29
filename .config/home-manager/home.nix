@@ -38,11 +38,13 @@
         pkgs.alacritty
         pkgs.spotify-tui
         pkgs.vscode
-        pkgs.nerdfonts
         pkgs.thunderbird
-        
+        pkgs.gnome.geary
+        pkgs.figlet
+        pkgs.htop
+        pkgs.cmatrix
+        pkgs.tty-clock
     ];
-
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
@@ -78,9 +80,17 @@
             source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
         '';
     };
-    programs.firefox.enable = true;
     programs.vivaldi.enable = true;
 
     nixpkgs.config.allowUnfree = true;
+    nixpkgs.overlays =
+      let
+        # Change this to a rev sha to pin
+        moz-rev = "master";
+        moz-url = builtins.fetchTarball { url = "https://github.com/mozilla/nixpkgs-mozilla/archive/${moz-rev}.tar.gz";};
+        nightlyOverlay = (import "${moz-url}/firefox-overlay.nix");
+      in [
+        nightlyOverlay
+      ];
 }
 

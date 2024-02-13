@@ -34,6 +34,11 @@ in
               bindsym Mod4+q exec swaylock --text-color 000000 --color ffffff --layout-bg-color ff0000 --image ~/Downloads/dark-bg-1.jpg
               bindsym Mod4+period exec wofi-emoji
               bindsym Mod4+c exec slurp | grim -g -
+              bindsym Mod4+n exec makoctl dismiss
+              bindsym Mod4+Shift+n exec makoctl dismiss -a
+              bindsym Mod4+p exec taita ls -p | wofi --show dmenu | xargs -I "{}" taita open -p "{}"
+              bindsym F5 exec brightnessctl set 10-
+              bindsym F6 exec brightnessctl set +10
             '';
         };
 
@@ -107,6 +112,13 @@ in
         programs.firefox.enable = true;
 
 
+        services.mako = {
+            enable = true;
+            font = "'Noto Sans' 11";
+            borderRadius = 10;
+            backgroundColor = "#172554cc";
+        };
+
         home.packages = [
             pkgs.wpa_supplicant_gui
             pkgs.wl-clipboard
@@ -135,6 +147,10 @@ in
             pkgs.wtype
             pkgs.gnome3.nautilus
             pkgs.loupe
+            pkgs.sshfs
+            pkgs.brightnessctl
+            pkgs.pkg-config
+            pkgs.alsaLib
         ];
     };
 }

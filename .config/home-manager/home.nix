@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
     imports = [./linux-config.nix];
@@ -55,7 +55,10 @@
         config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
     };
 
-    # Let Home Manager install and manage itself.
+    home.sessionPath = [
+        "/home/zachiahsawyer/.cargo/bin"
+    ];
+
     programs.home-manager.enable = true;
     programs.neovim.enable = true;
     programs.tmux = {
@@ -66,6 +69,7 @@
             bind -r j select-pane -D
             bind -r h select-pane -L
             bind -r l select-pane -R
+            set -g repeat-time 50 
         '';
     };
     programs.git.enable = true;
@@ -79,6 +83,10 @@
         initExtra = ''
             source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
         '';
+        profileExtra = lib.optionalString (config.home.sessionPath != [ ]) ''
+          export PATH="$PATH''${PATH:+:}${lib.concatStringsSep ":" config.home.sessionPath}"
+        '';
+
     };
     programs.vivaldi.enable = true;
 

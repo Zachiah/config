@@ -11,7 +11,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
-    "luukvbaal/nnn.nvim",
     "andweeb/presence.nvim",
     "nvim-telescope/telescope.nvim",
     "nvim-telescope/telescope-frecency.nvim",
@@ -67,9 +66,6 @@ require("lazy").setup({
 
 require("nvim-web-devicons").setup()
 
-require("nnn").setup({
-})
-
 require("presence").setup({})
 
 require 'nvim-treesitter.configs'.setup {
@@ -101,6 +97,9 @@ end)
 
 require('lspconfig').intelephense.setup({
 })
+
+require('lspconfig').rust_analyzer.setup({})
+
 
 require('mason').setup({})
 require('mason-lspconfig').setup({

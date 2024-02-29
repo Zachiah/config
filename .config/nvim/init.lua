@@ -13,7 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     "andweeb/presence.nvim",
     "nvim-telescope/telescope.nvim",
-    "nvim-telescope/telescope-frecency.nvim",
     'nvim-tree/nvim-web-devicons',
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
@@ -21,7 +20,6 @@ require("lazy").setup({
     { 'neovim/nvim-lspconfig' },
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/nvim-cmp' },
-    { 'L3MON4D3/LuaSnip' },
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
@@ -48,7 +46,6 @@ require("lazy").setup({
     'vim-airline/vim-airline',
     'airblade/vim-gitgutter',
     'f-person/git-blame.nvim',
-    'mg979/vim-visual-multi',
     'nmac427/guess-indent.nvim',
     'windwp/nvim-autopairs',
     {
@@ -146,7 +143,6 @@ vim.cmd [[
   colorscheme tokyonight
 ]]
 -- Keymappings
-require("telescope").load_extension "frecency"
 local telescope = require("telescope.builtin")
 
 vim.g.mapleader = " "
@@ -158,7 +154,6 @@ vim.keymap.set('n', '<leader>fg', function()
     })
 end, {})
 vim.keymap.set('n', '<leader>fs', telescope.treesitter)
-vim.api.nvim_set_keymap('n', '<leader>fr', ':Telescope frecency<CR>', { noremap = true, silent = true})
 vim.keymap.set('n', '<leader>fa', telescope.builtin)
 
 vim.api.nvim_set_keymap('n', '<leader>w', '<C-w>', {noremap = true, silent = true})

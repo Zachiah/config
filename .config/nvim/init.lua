@@ -146,7 +146,6 @@ vim.cmd [[
 local telescope = require("telescope.builtin")
 
 vim.g.mapleader = " "
-vim.api.nvim_set_keymap('n', '<Leader>fm', ':NnnExplorer<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>ff', telescope.find_files, {})
 vim.keymap.set('n', '<leader>fg', function()
     telescope.live_grep({

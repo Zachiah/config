@@ -44,6 +44,9 @@
         pkgs.htop
         pkgs.cmatrix
         pkgs.tty-clock
+        pkgs.gopls
+        pkgs.typescript
+        pkgs.lua-language-server
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -89,6 +92,9 @@
 
     };
     programs.vivaldi.enable = true;
+    programs.go = {
+        enable = true;
+    };
 
     nixpkgs.config.allowUnfree = true;
     nixpkgs.overlays =

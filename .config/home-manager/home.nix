@@ -30,20 +30,15 @@
         pkgs.twilio-cli
 
         pkgs.nodejs_20
-        pkgs.spotify
-        pkgs.discord
         pkgs.github-cli
         pkgs.ripgrep
         pkgs.kitty
         pkgs.alacritty
-        pkgs.spotify-tui
         pkgs.vscode
         pkgs.thunderbird
-        pkgs.gnome.geary
         pkgs.figlet
         pkgs.htop
         pkgs.cmatrix
-        pkgs.tty-clock
         pkgs.gopls
         pkgs.typescript
         pkgs.lua-language-server
@@ -91,7 +86,6 @@
         '';
 
     };
-    programs.vivaldi.enable = true;
     programs.go = {
         enable = true;
     };

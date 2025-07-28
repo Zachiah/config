@@ -1,15 +1,20 @@
+-- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
+
 require("lazy").setup({
     'andweeb/presence.nvim',
     'nvim-telescope/telescope.nvim',
@@ -42,17 +47,6 @@ require("lazy").setup({
         priority = 1000,
         opts = {},
     },
-    {
-        'glacambre/firenvim',
-
-        -- Lazy load firenvim
-        -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
-        lazy = not vim.g.started_by_firenvim,
-        -- lazy = false,
-        build = function()
-            vim.fn['firenvim#install'](0)
-        end
-    },
 }, opts)
 
 require("nvim-web-devicons").setup()
@@ -70,6 +64,9 @@ require 'nvim-treesitter.configs'.setup {
         "rust",
         "sql",
         "regex",
+        "vue",
+        "json",
+        "haskell",
     },
     highlight = {
         enable = true,
@@ -105,16 +102,43 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 })
 
-require('lspconfig').intelephense.setup({})
-require('lspconfig').rust_analyzer.setup({})
-require('lspconfig').gopls.setup({})
-require('lspconfig').tsserver.setup({})
+vim.lsp.enable('intelephense')
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('gopls')
+vim.lsp.enable('ts_ls')
+vim.lsp.config('ts_ls', {
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = "/Users/zachiahsawyer/.cache/npm/global/lib/node_modules/@vue/typescript-plugin",
+        languages = {"javascript", "typescript", "vue"},
+      },
+    },
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "vue",
+  },
+})
+vim.lsp.enable('hls')
 
-require('lspconfig').lua_ls.setup({})
-require('lspconfig').vimls.setup({})
-require('lspconfig').volar.setup({})
-require('lspconfig').svelte.setup({})
-require('lspconfig').tailwindcss.setup({})
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('vimls')
+vim.lsp.enable('volar')
+vim.lsp.config('volar', {
+  -- add filetypes for typescript, javascript and vue
+  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+  init_options = {
+    vue = {
+      -- disable hybrid mode
+      hybridMode = false,
+    },
+  },
+})
+vim.lsp.enable('svelte')
+vim.lsp.enable('tailwindcss')
 
 -- Setup nvim-cmp.
 local cmp = require'cmp'
@@ -134,7 +158,7 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- For luasnip users.
+    { name = 'luasnip' },
   }, {
     { name = 'buffer' },
     { name = 'path' }
@@ -198,5 +222,5 @@ require('nvim-autopairs').setup {}
 
 -- Line number colors
 vim.cmd [[
-    highlight LineNr ctermfg=White guifg=White
+    highlight LineNR ctermfg=White guifg=White
 ]]

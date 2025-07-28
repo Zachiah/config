@@ -42,6 +42,11 @@
         pkgs.gopls
         pkgs.typescript
         pkgs.lua-language-server
+        pkgs.tree
+
+        (pkgs.python3.withPackages (python-pkgs: [
+          python-pkgs.matplotlib
+        ]))
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -51,10 +56,12 @@
 
     home.shellAliases = {
         config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+        gitroot = "cd \"$(git rev-parse --show-toplevel)\"";
     };
 
     home.sessionPath = [
         "/home/zachiahsawyer/.cargo/bin"
+        "/Users/zachiahsawyer/.cache/npm/global/bin"
     ];
 
     programs.home-manager.enable = true;
@@ -84,6 +91,7 @@
         profileExtra = lib.optionalString (config.home.sessionPath != [ ]) ''
           export PATH="$PATH''${PATH:+:}${lib.concatStringsSep ":" config.home.sessionPath}"
         '';
+        shellAliases = config.home.shellAliases;
 
     };
     programs.go = {

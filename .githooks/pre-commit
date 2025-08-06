@@ -1,8 +1,8 @@
 #!/bin/bash
 
-BREWFILE_PATH="~/Brewfile"
+BREWFILE_PATH="$HOME/Brewfile"
 
 echo "Dumping current Homebrew packages to $BREWFILE_PATH..."
 brew bundle dump --file="$BREWFILE_PATH" --force
 
-git add $BREWFILE_PATH
+git --git-dir=$HOME/.cfg/ --work-tree=$HOME add $BREWFILE_PATH

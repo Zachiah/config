@@ -7,7 +7,7 @@ To add a new machine simply:
 - restart the shell
 - `config checkout` if there are issues checking out then remove the offending files and then run it again.
 - `config config --local status.showUntrackedFiles no`
+- Install homebrew
+- `brew bundle --file=Brewfile`
+- Install volta
 
-To get a nix managed `zsh` shell on MacOS do the following
-- edit the `/etc/shells` file to include the nix shell. Should be at `/Users/zachiahsawyer/.nix-profile/bin/zsh`
-- set that to the default shell with `chsh -s`

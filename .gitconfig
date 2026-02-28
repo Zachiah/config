@@ -3,9 +3,6 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
-[user]
-    name = Zachiah Sawyer
-    email = zachiah@proton.me
 [alias]
     fuzz = "!f() { git branch --sort=-committerdate --format=\"%(refname:short)\" | grep -m 1 \"$1\" | xargs git checkout; }; f"
 [push]
@@ -14,3 +11,10 @@
 	editor = nvim
 [rerere]
 	enabled = false
+[user]
+	useConfigOnly = true
+	email = zachiah@proton.me
+	name = Zachiah Sawyer
+[pull]
+	rebase = true
+	ff = only

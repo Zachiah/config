@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# Dev workflow script:
+#   1. Starts the database via docker-compose (detached)
+#   2. Opens localhost:5173 in the default browser
+#   3. Runs pnpm run dev (blocking — Ctrl+C to stop)
+#   4. After pnpm dev exits, tears down docker-compose
+#
+# Run from within a worktree directory.
+
+set -euo pipefail
+
+cleanup() {
+  echo ""
+  echo "Stopping Docker services..."
+  docker-compose down
+}
+
+trap cleanup EXIT
+
+echo "Removing conflicting containers..."
+docker rm -f cep-db cep-backend cep-frontend cep-nginx 2>/dev/null || true
+
+echo "Starting database..."
+docker-compose up db -d
+
+echo "Waiting for database to be healthy..."
+until docker inspect --format='{{.State.Health.Status}}' cep-db 2>/dev/null | grep -q "healthy"; do
+  sleep 1
+done
+echo "Database is healthy."
+
+echo "Running migrations..."
+pnpm --filter backend run db:migrate
+
+echo "Seeding test user..."
+pnpm --filter backend run db:seed
+
+echo "Opening http://localhost:5173 in your browser..."
+open http://localhost:5173
+
+echo "Starting dev server (Ctrl+C to stop)..."
+pnpm run dev

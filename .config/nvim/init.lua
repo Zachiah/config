@@ -120,6 +120,8 @@ vim.lsp.config('ts_ls', {
     "javascript",
     "typescript",
     "vue",
+    "javascriptreact",
+    "typescriptreact",
   },
 })
 vim.lsp.enable('hls')
@@ -127,6 +129,7 @@ vim.lsp.enable('hls')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('vimls')
 vim.lsp.enable('volar')
+vim.lsp.enable('eslint')
 vim.lsp.config('volar', {
   -- add filetypes for typescript, javascript and vue
   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
@@ -139,6 +142,8 @@ vim.lsp.config('volar', {
 })
 vim.lsp.enable('svelte')
 vim.lsp.enable('tailwindcss')
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('jsonls')
 
 -- Setup nvim-cmp.
 local cmp = require'cmp'

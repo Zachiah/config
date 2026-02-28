@@ -1,0 +1,92 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  // "minimap": {
+  //   "show": "always",
+  // },
+  // "theme_overrides": {
+  //   "Ayu Mirage": {
+  //     "panel.background": "#ff000000",
+  //   },
+  // },
+  "agent_servers": {
+    "github-copilot": {
+      "type": "registry"
+    }
+  },
+  "edit_predictions": {
+    "provider": "copilot"
+  },
+  "active_pane_modifiers": {},
+  "sticky_scroll": {
+    "enabled": false,
+  },
+  "restore_on_startup": "last_session",
+  "git_panel": {
+    "tree_view": true,
+  },
+  "use_smartcase_search": true,
+  "show_edit_predictions": true,
+  "use_system_path_prompts": false,
+  "profiles": {},
+  "helix_mode": false,
+  "project_panel": {
+    "hide_root": false,
+    "indent_size": 20,
+  },
+  "title_bar": {
+    "show_menus": false,
+  },
+  "ssh_connections": [
+    {
+      "host": "localhost",
+      "username": "zed",
+      "port": 2222,
+      "args": [],
+      "projects": [
+        {
+          "paths": ["/app"],
+        },
+        {
+          "paths": ["/config"],
+        },
+      ],
+      "nickname": "Local server 2",
+    },
+    {
+      "host": "localhost",
+      "username": "zed",
+      "port": 2223,
+      "args": [],
+      "projects": [
+        {
+          "paths": ["/app"],
+        },
+      ],
+      "nickname": "Local server 1",
+    },
+  ],
+  "icon_theme": "Modern Icons (Dark)",
+  "relative_line_numbers": "enabled",
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  // "buffer_font_family": "PT Mono",
+  // "buffer_font_family": "Google Sans Code",
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Ayu Dark",
+  },
+  "languages": {
+    "CSS": {
+      "language_servers": ["tailwindcss-language-server"],
+    },
+  },
+}

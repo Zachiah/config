@@ -52,6 +52,3 @@ export PATH=/Users/zachiahsawyer/.opencode/bin:$PATH
 
 # Added by Antigravity
 export PATH="/Users/zachiahsawyer/.antigravity/antigravity/bin:$PATH"
-
-# OpenClaw Completion
-source <(openclaw completion --shell zsh)

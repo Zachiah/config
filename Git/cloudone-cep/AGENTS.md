@@ -11,9 +11,28 @@
 
 - Branch naming: `ZS/{description}` (kebab-case description)
 - Always ask for review before committing
+- Always ask Zachiah for confirmation before amending commits or force pushing — never do these automatically
 - Reference GitHub issues in PR descriptions when applicable
 - PRs should target the `develop` branch unless otherwise specified
+- When Zachiah says "rebase", always rebase onto `develop` unless he specifies a different branch
 - When running `git rebase --continue`, always use `GIT_EDITOR=true git rebase --continue` to avoid hanging on an interactive editor prompt
+- When rebasing a branch that has migrations and the commits being rebased onto also introduced migrations, don't try to merge the migration conflicts. Instead, discard all migration artifacts from our branch (migration files, snapshot changes, etc.) and re-run the migrate command to regenerate them cleanly on top of the new base.
+- When Zachiah says "rebase [branch]" and there is no existing work context, treat it as a full rebase workflow:
+  1. Load the `existing-feature` skill to set up the worktree for that branch.
+  2. Before starting the rebase, ask Zachiah what level of review granularity he wants:
+     - **1. Each commit with conflicts** — pause and review at each commit that has conflicts
+     - **2. Inspect before force push** — complete the rebase, then review the result before force pushing
+     - **3. No review** — rebase and force push without pausing
+  3. Perform the rebase onto `develop` (or the specified branch) and force push, following the chosen review level.
+
+## Generated Files
+
+- `frontend/app/generated/` is gitignored. The SDK is regenerated at build/dev time via `pnpm run generate:openapi` in `backend/`. Don't waste time investigating whether it's tracked — it's not.
+
+## Backend Configuration
+
+- Never read environment variables directly (e.g., `process.env.FOO`) in backend code. Always use the split-out config files (`app.config.ts`, `cloudone.config.ts`, etc.) via NestJS `ConfigService`. If you see direct `process.env` usage in backend code outside of config files, flag it to Zachiah.
+- This rule does not apply to the frontend, which uses `useRuntimeConfig`.
 
 ## Code Style
 
@@ -28,10 +47,13 @@
 - Always use `type` instead of `interface` unless Zachiah specifically directs otherwise. Use `&` (intersection) instead of `extends` for type composition.
 - In Vue `<script setup>` files, colocate code by feature, not by type. Keep related state, computeds, watchers, and lifecycle hooks together rather than grouping all refs in one place and all `onMounted` calls in another.
 - Always use `defineModel` instead of manually defining a prop + `update:modelValue` emit for two-way binding.
+- Use `debug` for routine operation entry/success logs in services. Reserve `log` (info) for events meaningful to operators even when everything is working correctly (e.g., server startup, external service connections, scheduled job completions). If an operation fails, the exception filter already logs it — don't add explicit error logs for thrown exceptions.
 
 ## Design Principles
 
 - Keep mutable state as small as possible. Derive everything you can from the minimal state via computed properties. Make invalid states unrepresentable as much as possible.
+- Prefer immutable patterns over mutation. For example, when building arrays conditionally, use spread with ternaries (`[...baseItems, ...(condition ? [item] : [])]`) instead of declaring a `let`/`const` array and pushing to it. This keeps mutations from spreading across the function over time.
+- Never cause layout shift during page load. If a component depends on async data (e.g., a select that needs options from a query), await the query before rendering rather than conditionally showing/hiding the component. Use `await query.suspense()` or equivalent to ensure data is available on first paint. Always check for this during review.
 
 ## Worktree Safety
 
@@ -47,6 +69,7 @@
 
 - Always recheck `git status` / `git diff` before telling Zachiah the working tree is clean. He frequently codes alongside the conversation, so state can change at any time.
 - After making any changes, run prettier on the files that were changed
+- **Never run prettier on markdown (`.md`) files.** Continue using prettier for all other filetypes.
 - Always run prettier from within the relevant package directory (e.g., `frontend/`, `backend/`), not from the repo root
 
 ### Workflow Skills
@@ -57,6 +80,36 @@ The following workflows are available as OpenCode skills (in `.opencode/skills/`
 - **"Work on an existing feature"** → load the `existing-feature` skill
 - **"Cleanup old worktrees"** → load the `cleanup-worktrees` skill
 - **Committing changes** → load the `commit` skill before writing any commit message
+
+## GitHub Issues
+
+- When AI writes or updates a GitHub issue description, always append the following line at the very end: `*This description was written by AI.*`
+- Issue descriptions should be **business-friendly** and concise: summarize what changed and why in a sentence or two. Don't list out every detail — just the gist. Technical terms are fine, but avoid implementation details like variable names, function signatures, or code-level specifics.
+- Only update an issue description if it was written by AI (i.e., it contains the `*This description was written by AI.*` marker). Never overwrite human-written issue descriptions.
+- When creating an issue on the CEP project board, set its status to **In Progress**.
+- When work on an issue is complete (e.g., PR is merged or worktree is being cleaned up), move it to **Done** on the project board.
+
+### CEP Project Board Commands
+
+To find a project item ID for an issue:
+
+```bash
+gh project item-list 8 --owner cloud-one --format json --limit 100 | python3 -c "import json,sys; items = json.load(sys.stdin)['items']; [print(i['id']) for i in items if i.get('content',{}).get('number') == ISSUE_NUMBER]"
+```
+
+To set an issue's status on the board:
+
+```bash
+gh project item-edit --project-id PVT_kwDOAL3HVs4BLvoJ --id ITEM_ID --field-id PVTSSF_lADOAL3HVs4BLvoJzg7Of-I --single-select-option-id OPTION_ID
+```
+
+Status option IDs:
+- Backlog/Ideation: `2e31d460`
+- Todo: `f75ad846`
+- In Progress: `47fc9ee4`
+- Blocked: `7bc18143`
+- Ready For Review: `359d290d`
+- Done: `98236657`
 
 ## Meta
 

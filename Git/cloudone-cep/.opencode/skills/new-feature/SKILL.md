@@ -9,20 +9,23 @@ The repo uses git worktrees so multiple agents can work in parallel. The main wo
 
 ## Steps
 
-1. Ask clarifying questions about the feature and get the GitHub issue number
-2. Make a plan for how to implement the feature (e.g., which controllers/services/modules to modify or create)
-3. In `MAIN/`, run `git fetch origin` to get the latest remote state
-4. Create a new worktree with the feature branch: `git worktree add -b ZS/{description} ../ZS--{description} origin/develop` (run from `MAIN/`)
-5. Run `pnpm install` inside the new worktree
-6. Run `../setup-worktree.sh` to symlink the `.env` file and `test` dev script into the new worktree
-7. Print a terminal name for Zachiah to copy: `OPENCODE {Human-Readable Very Short Description}` (so he can rename the terminal tab)
-8. Work entirely inside the new worktree directory (`ZS--{description}/`) for all code changes
-9. Ask Zachiah to look over the code
-10. If he approves, do a final self-review of the code
-11. Create a commit
-12. Push the branch
-13. Create a PR targeting `develop` that references the issue (e.g., "Fixes #123")
-14. After the PR is merged, clean up the worktree (use the `cleanup-worktrees` skill or see "Removing a worktree" below)
+1. Ask clarifying questions about the feature
+2. Ask whether there is an existing GitHub issue number or whether to create a new one:
+   - **Existing issue**: use that issue number going forward
+   - **Create new issue**: create a GitHub issue (`gh issue create --repo cloud-one/cep`) and add it to the CEP project board (`gh project item-add 8 --owner cloud-one --url <issue-url>`). Use the new issue number going forward.
+3. Make a plan for how to implement the feature (e.g., which controllers/services/modules to modify or create)
+4. In `MAIN/`, run `git fetch origin` to get the latest remote state
+5. Create a new worktree with the feature branch: `git worktree add -b ZS/{description} ../ZS--{description} origin/develop` (run from `MAIN/`)
+6. Run `pnpm install` inside the new worktree
+7. Run `../setup-worktree.sh` to symlink the `.env` file and `test` dev script into the new worktree
+8. Rename this agent's tmux window: `tmux rename-window -t "$TMUX_PANE" '{Human-Readable Very Short Description}'`
+9. Work entirely inside the new worktree directory (`ZS--{description}/`) for all code changes
+10. Ask Zachiah to look over the code
+11. If he approves, do a final self-review of the code
+12. Create a commit
+13. Push the branch
+14. Create a PR targeting `develop` that references the issue (e.g., "Fixes #123")
+15. After the PR is merged, clean up the worktree (use the `cleanup-worktrees` skill or see "Removing a worktree" below)
 
 ## Removing a worktree
 

@@ -14,10 +14,11 @@ The repo uses git worktrees so multiple agents can work in parallel. The main wo
 3. Check if a worktree for that branch already exists: `git worktree list` (run from `MAIN/`)
 4. If the worktree **does not** exist, create it: `git worktree add -b {branch} ../{dir} origin/{branch}` (run from `MAIN/`). The `-b` flag creates a local branch tracking the remote ref, avoiding a detached HEAD.
 5. If the worktree **already exists**, just navigate to it and make sure it's up to date: `git pull` (run from within the worktree)
-6. Run `pnpm install` inside the worktree
-7. Run `../setup-worktree.sh` to symlink the `.env` file and `test` dev script into the worktree
-8. Print a terminal name for Zachiah to copy: `OPENCODE {Human-Readable Very Short Description}` (so he can rename the terminal tab)
-9. Ask clarifying questions about what work needs to be done
+6. Ask Zachiah if he wants to set up the environment (pnpm install, symlink .env/test script). If yes:
+   - Run `pnpm install` inside the worktree
+   - Run `../setup-worktree.sh` to symlink the `.env` file and `test` dev script into the worktree
+7. Rename this agent's tmux window: `tmux rename-window -t "$TMUX_PANE" '{Human-Readable Very Short Description}'`
+8. Ask clarifying questions about what work needs to be done
 10. Work entirely inside the worktree directory for all code changes
 11. Ask Zachiah to look over the code
 12. If he approves, do a final self-review of the code

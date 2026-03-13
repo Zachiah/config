@@ -34,7 +34,7 @@ echo "Running migrations..."
 pnpm --filter backend run db:migrate
 
 echo "Seeding test user..."
-pnpm --filter backend run db:seed
+pnpm --filter backend run db:seed admin-user
 
 echo "Opening http://localhost:5173 in your browser..."
 open http://localhost:5173

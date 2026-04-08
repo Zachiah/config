@@ -15,12 +15,26 @@
   //     "panel.background": "#ff000000",
   //   },
   // },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
   "agent_servers": {
     "github-copilot": {
       "type": "registry"
     }
   },
   "edit_predictions": {
+    "copilot": {
+      "enable_next_edit_suggestions": true
+    },
     "provider": "copilot"
   },
   "active_pane_modifiers": {},
@@ -29,6 +43,7 @@
   },
   "restore_on_startup": "last_session",
   "git_panel": {
+    "dock": "left",
     "tree_view": true,
   },
   "use_smartcase_search": true,
@@ -37,6 +52,7 @@
   "profiles": {},
   "helix_mode": false,
   "project_panel": {
+    "dock": "left",
     "hide_root": false,
     "indent_size": 20,
   },

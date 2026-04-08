@@ -10,6 +10,30 @@
 
 set -euo pipefail
 
+REQUIRED_PORTS=(5432 3000 5173)
+PORT_LABELS=(
+  [5432]="PostgreSQL"
+  [3000]="Backend (NestJS)"
+  [5173]="Frontend (Nuxt/Vite)"
+)
+
+blocked=0
+for port in "${REQUIRED_PORTS[@]}"; do
+  pid=$(lsof -ti :"$port" 2>/dev/null || true)
+  if [[ -n "$pid" ]]; then
+    process_info=$(ps -p "$pid" -o pid=,command= 2>/dev/null || echo "$pid (unknown)")
+    echo "ERROR: Port $port (${PORT_LABELS[$port]}) is already in use!"
+    echo "  PID $process_info"
+    echo ""
+    blocked=1
+  fi
+done
+
+if [[ "$blocked" -eq 1 ]]; then
+  echo "Refusing to start — free the ports listed above and try again."
+  exit 1
+fi
+
 cleanup() {
   echo ""
   echo "Stopping Docker services..."
@@ -35,6 +59,9 @@ pnpm --filter backend run db:migrate
 
 echo "Seeding test user..."
 pnpm --filter backend run db:seed admin-user
+
+echo "Generating OpenAPI SDK..."
+pnpm --filter backend run generate:openapi
 
 echo "Opening http://localhost:5173 in your browser..."
 open http://localhost:5173

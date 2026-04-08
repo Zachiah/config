@@ -18,7 +18,8 @@ The repo uses git worktrees so multiple agents can work in parallel. The main wo
    - Run `pnpm install` inside the worktree
    - Run `../setup-worktree.sh` to symlink the `.env` file and `test` dev script into the worktree
 7. Rename this agent's tmux window: `tmux rename-window -t "$TMUX_PANE" '{Human-Readable Very Short Description}'`
-8. Ask clarifying questions about what work needs to be done
+8. Set up tmux panes using the `setup-tmux` skill (use the worktree as the working directory)
+9. Ask clarifying questions about what work needs to be done
 10. Work entirely inside the worktree directory for all code changes
 11. Ask Zachiah to look over the code
 12. If he approves, do a final self-review of the code

@@ -6,9 +6,12 @@
 - The repo uses git worktrees. Each worktree (e.g., `MAIN/`, `ZS--my-feature/`) is a full checkout containing:
   - `backend/` — built with NestJS, TypeScript, Drizzle ORM, and PostgreSQL
   - `frontend/` — built with Nuxt, TypeScript, Vue, and Tailwind CSS
+- The `scripting-engine/` directory at the repo root is the **old** standalone scripting engine project (Nuxt 4 + Cloudflare). The scripting engine has been ported into the CEP as a feature. All new scripting engine work happens in the CEP's `backend/` and `frontend/` directories, not in `scripting-engine/`. The old directory is kept for reference only.
 
 ## Git Conventions
 
+- When fetching reveals two remote branches that differ only in casing (e.g., `feat/PM/foo` vs `feat/pm/foo`), always ask Zachiah which one to use before creating a worktree. Patrick often ends up with duplicate branches like this.
+- Before creating a new worktree, always pull latest `develop` in `MAIN` first and create the new worktree based on that.
 - Branch naming: `ZS/{description}` (kebab-case description)
 - Always ask for review before committing
 - Always ask Zachiah for confirmation before amending commits or force pushing — never do these automatically
@@ -16,7 +19,7 @@
 - PRs should target the `develop` branch unless otherwise specified
 - When Zachiah says "rebase", always rebase onto `develop` unless he specifies a different branch
 - When running `git rebase --continue`, always use `GIT_EDITOR=true git rebase --continue` to avoid hanging on an interactive editor prompt
-- When rebasing a branch that has migrations and the commits being rebased onto also introduced migrations, don't try to merge the migration conflicts. Instead, discard all migration artifacts from our branch (migration files, snapshot changes, etc.) and re-run the migrate command to regenerate them cleanly on top of the new base.
+- Before starting any rebase, check whether the commits being rebased onto introduced migration changes and whether our branch also has migration changes. If both sides have migrations, don't try to merge the migration conflicts. Instead, discard all migration artifacts from our branch (migration files, snapshot changes, etc.) and re-run `pnpm run db:generate` from the worktree root to regenerate them cleanly on top of the new base.
 - When Zachiah says "rebase [branch]" and there is no existing work context, treat it as a full rebase workflow:
   1. Load the `existing-feature` skill to set up the worktree for that branch.
   2. Before starting the rebase, ask Zachiah what level of review granularity he wants:
@@ -24,6 +27,15 @@
      - **2. Inspect before force push** — complete the rebase, then review the result before force pushing
      - **3. No review** — rebase and force push without pausing
   3. Perform the rebase onto `develop` (or the specified branch) and force push, following the chosen review level.
+
+## Migrations
+
+- Always generate migrations by running `pnpm run db:generate` **from the worktree root** (not from `backend/`). The root script proxies to `backend/scripts/db-generate.cjs`, which wraps `drizzle-kit generate` and ensures the migration gets a descriptive name.
+- The script will prompt for a migration name interactively, or you can pass one via `--name`:
+  ```bash
+  pnpm run db:generate -- --name add-users-table
+  ```
+- Never call `drizzle-kit generate` directly — always go through the `db:generate` script so migrations are named consistently.
 
 ## Generated Files
 
@@ -37,7 +49,7 @@
 ## Code Style
 
 - Follow existing NestJS patterns (controllers, services, modules)
-- Use Drizzle ORM for database queries
+- Use Drizzle ORM for database queries — prefer the select/insert/update/delete API (`this.db.select()...`) over the query API (`this.db.query...`)
 - Swagger/OpenAPI decorators on all controller endpoints
 - Do not write comments in code unless the comment explains _why_ something non-obvious is happening (e.g., a weird pattern for performance reasons)
 - When Zachiah says "temporarily", add a highly visible comment on the temporary code: `// TODO: REMOVE THIS IS TEMPORARY`. Put this comment on every line or block of temporary code, including imports.
@@ -48,6 +60,9 @@
 - In Vue `<script setup>` files, colocate code by feature, not by type. Keep related state, computeds, watchers, and lifecycle hooks together rather than grouping all refs in one place and all `onMounted` calls in another.
 - Always use `defineModel` instead of manually defining a prop + `update:modelValue` emit for two-way binding.
 - Use `debug` for routine operation entry/success logs in services. Reserve `log` (info) for events meaningful to operators even when everything is working correctly (e.g., server startup, external service connections, scheduled job completions). If an operation fails, the exception filter already logs it — don't add explicit error logs for thrown exceptions.
+- Never use `switch` statements to exhaustively handle a union type. Instead, use a chain of `if` statements with an exhaustive `never` check at the end (`const _exhaustive: never = x; throw _exhaustive;`). Flag this pattern when reviewing code.
+- Public APIs must never expose `id` for any model that has a `sid`. Always use `sid` in API responses, DTOs, and controller parameters. If you notice `id` being exposed on a model that has a `sid` — in any context, not just code you're actively working on — flag it to Zachiah.
+- All TanStack Query keys in the frontend must go through the centralized `queryKeys` object in `frontend/app/lib/query-keys.ts`. Never use inline query key arrays (e.g., `queryKey: ['foo', id]`). If you notice an inline query key — during code review, while reading a file, or anywhere else — flag it to Zachiah.
 
 ## Design Principles
 
@@ -60,6 +75,11 @@
 - **NEVER touch files in another worktree.** Only modify files within the worktree you've been told to work in.
 - Before doing anything at all, ask Zachiah which worktree to work in if it hasn't already been clarified (e.g., from the "work on a new feature" flow or another prior instruction).
 - A `WORKSPACE` worktree exists for one-off quick tasks. If there's no obvious current worktree for a task, ask Zachiah if he wants to use `WORKSPACE`.
+
+## Tmux Window Naming
+
+- When working on someone else's PR via the existing-feature workflow, name the tmux window in the format: `${pr number} ${author} - ${name}` (e.g., `339 Pierce - Agent Presence`).
+- For Zachiah's own branches, use a short human-readable description.
 
 ## Compaction
 
@@ -80,6 +100,7 @@ The following workflows are available as OpenCode skills (in `.opencode/skills/`
 - **"Work on an existing feature"** → load the `existing-feature` skill
 - **"Cleanup old worktrees"** → load the `cleanup-worktrees` skill
 - **Committing changes** → load the `commit` skill before writing any commit message
+- **"Setup tmux"** → load the `setup-tmux` skill
 
 ## GitHub Issues
 
@@ -116,6 +137,14 @@ Status option IDs:
 - When Zachiah says "remember", write what he says into this file (`AGENTS.md`) in the `cloudone-cep` directory above all of the worktree directories.
 - Never touch the `.env` file
 
+## E2E Tests
+
+- Run E2E tests using `pnpm run test:e2e` from the worktree root. This runs `scripts/e2e.sh`, which spins up a separate database, backend, and frontend, runs Playwright, then cleans up.
+- To run a specific test file: `pnpm run test:e2e -- e2e/my-test.spec.ts`
+- During the E2E TDD flow:
+  - After writing the failing tests (before asking Zachiah to review), run them and confirm they **fail** as expected.
+  - After implementing the feature (before asking Zachiah to review), run them and confirm they **pass**.
+
 ## Dev Script (`test`)
 
 - A `test` bash script lives in the repo root (above the worktrees) and is symlinked into each worktree by `setup-worktree.sh`.
@@ -125,6 +154,10 @@ Status option IDs:
   3. Run `pnpm run dev` (blocking — Ctrl+C to stop)
   4. After `pnpm dev` exits, automatically run `docker-compose down`
 - Both `test` and `setup-worktree.sh` are excluded from git via `MAIN/.git/info/exclude`.
+
+## Lockfile Conflicts
+
+- When `pnpm-lock.yaml` has conflicts, just run `pnpm install` — pnpm handles conflicted lockfiles automatically. No need to accept either side or manually resolve.
 
 ## Package Installation
 

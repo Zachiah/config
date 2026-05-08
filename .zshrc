@@ -52,3 +52,7 @@ export PATH=/Users/zachiahsawyer/.opencode/bin:$PATH
 
 # Added by Antigravity
 export PATH="/Users/zachiahsawyer/.antigravity/antigravity/bin:$PATH"
+
+# Added by Merget
+export PATH="/Users/zachiahsawyer/.merget/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

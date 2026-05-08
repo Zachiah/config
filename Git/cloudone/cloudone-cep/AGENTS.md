@@ -7,6 +7,7 @@
   - `backend/` — built with NestJS, TypeScript, Drizzle ORM, and PostgreSQL
   - `frontend/` — built with Nuxt, TypeScript, Vue, and Tailwind CSS
 - The `scripting-engine/` directory at the repo root is the **old** standalone scripting engine project (Nuxt 4 + Cloudflare). The scripting engine has been ported into the CEP as a feature. All new scripting engine work happens in the CEP's `backend/` and `frontend/` directories, not in `scripting-engine/`. The old directory is kept for reference only.
+- When porting code from the old scripting engine into the CEP, copy it exactly unless there's a genuine reason to change it (e.g., adapting to NestJS patterns, fixing a bug, or matching CEP conventions). If you do change something, tell Zachiah what you did differently and ask if that's okay.
 
 ## Git Conventions
 
@@ -27,6 +28,11 @@
      - **2. Inspect before force push** — complete the rebase, then review the result before force pushing
      - **3. No review** — rebase and force push without pausing
   3. Perform the rebase onto `develop` (or the specified branch) and force push, following the chosen review level.
+  4. After the rebase is complete (regardless of review level), always:
+     - Write a list of every conflict encountered, showing what both sides had for each conflict.
+     - Verify each conflict resolution one by one — most of the time both sides' changes need to be incorporated, which may be non-trivial.
+     - Print the full list of conflicts and how each was resolved to Zachiah.
+  5. After the rebase is complete, do **not** automatically clean up the worktree. Leave it in place until Zachiah explicitly says to clean it up.
 
 ## Migrations
 
@@ -63,6 +69,8 @@
 - Never use `switch` statements to exhaustively handle a union type. Instead, use a chain of `if` statements with an exhaustive `never` check at the end (`const _exhaustive: never = x; throw _exhaustive;`). Flag this pattern when reviewing code.
 - Public APIs must never expose `id` for any model that has a `sid`. Always use `sid` in API responses, DTOs, and controller parameters. If you notice `id` being exposed on a model that has a `sid` — in any context, not just code you're actively working on — flag it to Zachiah.
 - All TanStack Query keys in the frontend must go through the centralized `queryKeys` object in `frontend/app/lib/query-keys.ts`. Never use inline query key arrays (e.g., `queryKey: ['foo', id]`). If you notice an inline query key — during code review, while reading a file, or anywhere else — flag it to Zachiah.
+- Properties in response DTOs should almost never be optional. The value will still be present in the response (as a literal `null`), so the property itself is not absent — mark it as required with a nullable type instead. If you notice optional properties in response DTOs, flag it to Zachiah.
+- All response DTOs must be named `{ThingName}ResponseDto` and all request DTOs must be named `{ThingName}RequestDto`. If you notice DTOs that don't follow this convention, flag it to Zachiah.
 
 ## Design Principles
 

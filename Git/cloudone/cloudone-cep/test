@@ -10,16 +10,15 @@
 
 set -euo pipefail
 
-REQUIRED_PORTS=(5432 3000 5173)
+REQUIRED_PORTS=(3000 5173)
 PORT_LABELS=(
-  [5432]="PostgreSQL"
   [3000]="Backend (NestJS)"
   [5173]="Frontend (Nuxt/Vite)"
 )
 
 blocked=0
 for port in "${REQUIRED_PORTS[@]}"; do
-  pid=$(lsof -ti :"$port" 2>/dev/null || true)
+  pid=$(lsof -ti :"$port" -sTCP:LISTEN 2>/dev/null || true)
   if [[ -n "$pid" ]]; then
     process_info=$(ps -p "$pid" -o pid=,command= 2>/dev/null || echo "$pid (unknown)")
     echo "ERROR: Port $port (${PORT_LABELS[$port]}) is already in use!"
